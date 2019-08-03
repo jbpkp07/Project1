@@ -6,15 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Search Job Advancement v1.0</title>
+    <title>Techin v1.0</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico">
-    <link rel="prefetch" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" as="style">
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <link rel="stylesheet" href="./assets/css/reset.css" type="text/css">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="./assets/css/datatables.css" type="text/css">
     <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
 
@@ -22,24 +21,27 @@
 
 <body>
 
-    <div id="title">Search Job Advancement</div>
+    <div id="header">
+        <div id="headerBox">
+            <img id="techinLogo" src="./assets/images/Techin.png" alt="Techin Logo">
+            <form id="searchJobsForm">
+                <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title">
+                <input id="jobLocationInput" class="form-control" type="text" placeholder="City / State / Zip">
+                <input id="jobRadiusInput" class="form-control" type="text" placeholder="Radius">
+                <input id="jobSalaryInput" class="form-control" type="text" placeholder="Salary">
+                <button id="searchJobsSubmitBtn" type="submit">
+                    <img id="searchIcon" src="./assets/images/searchIcon.png">
+                </button>
+            </form>
+        </div>
+    </div>
 
     <div id="jobResultsTBLWrapper">
         <div id="jobResults">Job Results</div>
         <table id="jobResultsTBL" class="cell-border hover"></table>
     </div>
 
-    <div id="searchJobs">Search Jobs</div>
 
-    <form id="searchJobsForm">
-        <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title">
-        <input id="jobLocationInput" class="form-control" type="text" placeholder="Location">
-        <input id="jobRadiusInput" class="form-control" type="text" placeholder="Radius (miles 5, 10, 15, 25, 50)">
-        <input id="jobSalaryInput" class="form-control" type="text" placeholder="Salary ($33,500 - $200,000)">
-        <div id="searchJobsSubmitBox">
-            <button id="searchJobsSubmitBtn" type="submit">Submit</button>
-        </div>
-    </form>
 
     <!-- <div class="jumbotron">
         <h1 class="text-center">Search Job Advancement</h1> <br>
@@ -60,8 +62,10 @@
         <div id="results-display"></div>
     </div> -->
 
+    <script src="./assets/joobleBackupJSON/jooble.js"></script>
     <script src="./assets/javascript/datatables.js"></script>
     <script src="./assets/javascript/Utility.js"></script>
+    <script src="./assets/javascript/JoobleAPI.js"></script>
     <script src="./assets/javascript/Model.js"></script>
     <script src="./assets/javascript/ViewController.js"></script>
     <script src="./assets/javascript/App.js"></script>

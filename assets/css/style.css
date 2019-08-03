@@ -1,12 +1,12 @@
 * {
     box-sizing: border-box;
-    cursor: default;
+    /* cursor: default; */
 }
 
-body, html {
-    background: rgb(18, 18, 18);
-    color: rgb(240,240,240);
-    font-family: 'Roboto', sans-serif;
+body {
+    background: rgba(18,18,18,1.0);
+    color: rgba(248,248,248,1.0);
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     height: 100%;
     margin: 0;
@@ -14,18 +14,95 @@ body, html {
     /* overflow-y: hidden; */
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-}
-
-#title {
-    font-size: 36pt;
-    font-weight: 900;
-    margin-top: 20px;
-    text-align: center;
     width: 100%;
 }
 
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+#headerBox {
+    background: rgba(32,32,32,1.0);
+    border: 3px solid rgba(248,248,248,1.0);
+    border-radius: 10px;
+    margin: 20px auto 0px auto;
+    max-width: 1200px;
+    overflow: auto;
+    overflow-x: hidden;
+    width: 95%
+}
+
+#techinLogo {
+    float: left;
+    height: 60px;
+    margin: 10px 10px 10px 10px;
+}
+
+#searchJobsForm {
+    position: relative;
+    text-align: right;
+    top: 21px;
+}
+
+#jobTitleInput, #jobLocationInput, #jobRadiusInput, #jobSalaryInput {
+    background: rgba(18,18,18,1.0);
+    border: 2px solid rgba(248,248,248,1.0);
+    border-radius: 5px;
+    box-shadow: none;
+    color: rgba(248,248,248,1.0);
+    display: inline-block;
+    height: 36px;
+    margin-right: 10px;
+    outline: none;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#jobTitleInput, #jobLocationInput {
+    width: 19%;
+}
+
+#jobRadiusInput, #jobSalaryInput {
+    width: 10%;
+}
+
+#searchJobsSubmitBtn {
+    background: rgba(32,32,32,1.0);
+    border: 0;
+    height: 36px;
+    margin-left: -4px;
+    margin-right: 10px;
+    outline: none;
+    padding: 0;
+    position: relative;
+    top: -1px;
+}
+
+#searchIcon {
+    width: 34px;
+}
+
+
+
+
+
+
+
+/* Needs Colors to be checked */
+
+
+
+
+
+
+
+
 #jobResultsTBLWrapper {
-    margin: 50px auto 0px auto;
+    margin: 150px auto 50px auto;
+    /* overflow-y: hidden; */
     width: 95%;
 }
 
@@ -33,7 +110,7 @@ body, html {
     font-size: 18pt;
     position: relative;
     text-align: center;
-    top: 30px;
+    top: 36px;
 }
 
 #jobResultsTBL_length, #jobResultsTBL_filter {
@@ -45,7 +122,7 @@ body, html {
     border: 3px solid rgba(240,240,240,1.0);
     border-radius: 10px;
     color: rgb(240,240,240);
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     height: 36px;
     outline: none;
@@ -87,50 +164,13 @@ body, html {
 #jobResultsTBL_paginate a {
     border-radius: 5px;
     border: 2px solid rgb(240,240,240);
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     font-weight: 700;
 }
 
-#searchJobs {
-    font-size: 18pt;
-    position: relative;
-    text-align: center;
-    top: 72px;
-}
-
-#searchJobsForm {
-    background: rgb(64,64,64);
-    border: 3px solid rgba(240,240,240,1.0);
-    border-radius: 10px;
-    margin: 100px auto 50px auto;
-    max-width: 400px;
-    min-width: 310px;
-}
-
-#jobTitleInput, #jobLocationInput, #jobRadiusInput, #jobSalaryInput {
-    background: rgb(18, 18, 18);
-    border: 2px solid rgb(240,240,240);
-    border-radius: 5px;
-    color: rgb(240,240,240);
-    display: block;
-    font-family: 'Roboto', sans-serif;
-    font-size: 12pt;
-    height: 36px;
-    margin: 30px auto 30px auto;
-    outline: none;
-    padding-left: 10px;
-    width: 90%;
-}
-
-#searchJobsSubmitBox {
-    height: 36px;
-    margin: 30px auto 30px auto;
-    width: 90%;
-}
-
-#searchJobsSubmitBtn, .applyBTN {
-    background: rgb(18, 18, 18);
+.applyBTN {
+    background: rgba(18,18,18,1.0);
     border: 2px solid rgba(240,240,240,0.75);
     border-radius: 10px;
     color: rgba(255,255,255,1.0);
@@ -138,32 +178,7 @@ body, html {
     padding: 9px 10px 8px 10px;
 }
 
-#searchJobsSubmitBtn:hover, .applyBTN:hover {
+.applyBTN:hover {
     border: 2px solid rgba(255,255,255,1.0);
     color: rgba(255,255,255,1.0);
-}
-
-
-
-
-
-
-
-/* Syeda's CSS */
-.jobsDiv {
-    padding: 20px;
-    margin: 10px;
-}
-
-p {
-    padding: 10px;
-}
-
-#jobsBox {
-    margin-bottom: 20px;
-    float: left;
-}
-
-.applyBtn {
-    margin: 20px;
 }

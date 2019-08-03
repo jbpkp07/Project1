@@ -1,0 +1,5 @@
+Job Title:  "Web Developer"
+Location:   "Los Angeles"
+Radius:     "10"
+Salary:     "100000"
+Page:       "1", "2", and "3"  (60 results total)

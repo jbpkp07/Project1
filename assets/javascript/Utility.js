@@ -32,7 +32,7 @@ class Utility {
 
     static isLocationInValid(location) {
 
-        if (location.length < 3) {
+        if (location.length < 2) {
 
             return true;
         }

@@ -10,7 +10,7 @@ class ViewController {
         this._jobResultsTBL = $("#jobResultsTBL");
 
         // @ts-ignore
-        this._jobResults = this._jobResultsTBL.DataTable({
+        this._jobResultsDataTable = this._jobResultsTBL.DataTable({
 
             "info": false,
             "pagingType": "numbers",
@@ -36,17 +36,16 @@ class ViewController {
         this._tablePollFrequencyMS = 1000;
         this._isTablePollStarted = false;
 
-        this.assignSubmitBtnListener();
+        this.assignInputListeners();
 
-        // this.updateSchedulePoll(this._tablePollFrequencyMS);
+        this.assignUpdateTableListener();
     }
 
-    assignSubmitBtnListener() {
+    assignInputListeners() {
 
         this._searchJobsSubmitBtn.click((event) => {
 
             event.preventDefault();
-
 
             const jobTitle = this._jobTitleInput.val().toString().trim();
             const location = this._jobLocationInput.val().toString().trim();
@@ -56,7 +55,7 @@ class ViewController {
             const isInputValid = this.isInputValid(jobTitle, location, radius, salary);
 
             if (isInputValid) {
-      
+
                 this.resetInputValidation();
 
                 this._jobTitleInput.val("");
@@ -64,18 +63,59 @@ class ViewController {
                 this._jobRadiusInput.val("");
                 this._jobSalaryInput.val("");
 
-                this._model.getJobsFromAPI(jobTitle, location, radius, salary).then(() => {
+                this._model.getJobsFromAPI(jobTitle, location, radius, salary);
+            }
+        });
 
-                    const jobsJSON = this._model.getJobsJSONForTable();
+        this._jobTitleInput.keyup(() => {
 
-                    this._jobResults.clear().rows.add(jobsJSON).draw(false);
-                });
+            const jobTitle = this._jobTitleInput.val().toString().trim();
+
+            if (jobTitle.length === 0) {
+
+                this._jobTitleInput.attr("style", "");
+            }
+            else if (Utility.isJobTitleInValid(jobTitle)) {
+
+                this._jobTitleInput.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
+            }
+            else {
+    
+                this._jobTitleInput.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
+            }
+        });
+
+        this._jobLocationInput.keyup(() => {
+
+            const location = this._jobLocationInput.val().toString().trim();
+
+            if (location.length === 0) {
+
+                // this._jobLocationInput.attr("style", "");
+            }
+            else if (Utility.isLocationInValid(location)) {
+
+                this._jobLocationInput.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
+            }
+            else {
+    
+                this._jobLocationInput.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
             }
         });
     }
 
+    assignUpdateTableListener() {
+
+        addEventListener("updateTable", () => {
+
+            const jobsJSON = this._model.getAllJobsJSONForTable();
+
+            this._jobResultsDataTable.clear().rows.add(jobsJSON).draw(false);
+        });
+    }
+
     resetInputValidation() {
-        
+
         this._jobTitleInput.attr("style", "");
         this._jobLocationInput.attr("style", "");
         this._jobRadiusInput.attr("style", "");
@@ -95,46 +135,46 @@ class ViewController {
 
         if (Utility.isJobTitleInValid(jobTitle)) {
 
-            this._jobTitleInput.attr("style", "border: 2px solid red;");
+            this._jobTitleInput.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
 
             isValid = false;
         }
         else {
 
-            this._jobTitleInput.attr("style", "border: 2px solid green;");
+            this._jobTitleInput.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
         }
 
         if (Utility.isLocationInValid(location)) {
 
-            this._jobLocationInput.attr("style", "border: 2px solid red;");
+            this._jobLocationInput.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
 
             isValid = false;
         }
         else {
 
-            this._jobLocationInput.attr("style", "border: 2px solid green;");
+            this._jobLocationInput.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
         }
 
         if (Utility.isRadiusInValid(radius)) {
 
-            this._jobRadiusInput.attr("style", "border: 2px solid red;");
+            this._jobRadiusInput.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
 
             isValid = false;
         }
         else {
 
-            this._jobRadiusInput.attr("style", "border: 2px solid green;");
+            this._jobRadiusInput.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
         }
 
         if (Utility.isSalaryInValid(salary)) {
 
-            this._jobSalaryInput.attr("style", "border: 2px solid red;");
+            this._jobSalaryInput.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
 
             isValid = false;
         }
         else {
 
-            this._jobSalaryInput.attr("style", "border: 2px solid green;");
+            this._jobSalaryInput.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
         }
 
         return isValid;
