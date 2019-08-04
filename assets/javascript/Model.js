@@ -1,11 +1,14 @@
 "use strict";
-/* global JoobleAPI, Utility */
+/* global GeoCoderAPI, JoobleAPI, Utility */
 
 class Model {
 
     constructor() {
 
+        this._geoCoderAPI = new GeoCoderAPI();
+
         this._joobleAPI = new JoobleAPI();
+
         this._jobs = [];
     }
 
@@ -39,6 +42,16 @@ class Model {
         }
 
         return jobsJSON;
+    }
+
+    setZipCode() {
+
+        this._geoCoderAPI.setUserLocation();
+    }
+
+    getZipCode() {
+
+        return this._geoCoderAPI._zipCode;
     }
 }
 
