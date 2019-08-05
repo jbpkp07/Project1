@@ -8,7 +8,8 @@ class GeoCoderAPI {
         this._APIConnectionOBJ = 
         {
             "app_id": "757glFXSECswLKpQnUvY",
-            "app_code": "awv7DrKyPmij6xLUXh7OYg"
+            "app_code": "awv7DrKyPmij6xLUXh7OYg",
+            "useHTTPS": true
         };
 
         // @ts-ignore
