@@ -25,6 +25,10 @@ class ViewController {
         this._radiusValue = null;
         this._salaryValue = null;
 
+        this._switchWrapper = $("#switchWrapper");
+        this._resultsSwitch = $("#resultsSwitch");
+        this._currentResultsViewType = "Carousel";
+
         this._loading = $("#loading");
 
         this._jobResultsTBLWrapper = $("#jobResultsTBLWrapper");
@@ -109,7 +113,7 @@ class ViewController {
 
             if (this.isAllInputValid()) {
 
-                // this.resetInputValidation();
+                this.hideResultsSwitch();
 
                 this.hideResultsCarousel();
 
@@ -212,6 +216,26 @@ class ViewController {
 
             this.isAllInputValid();
         });
+
+        this._resultsSwitch.click(() => {
+
+            const previousValue = this._resultsSwitch.val();
+
+            if (previousValue === "Carousel") {
+
+                this._currentResultsViewType = "Table";
+
+                this._resultsSwitch.val("Table");
+            }
+            else {
+
+                this._currentResultsViewType = "Carousel";
+
+                this._resultsSwitch.val("Carousel");
+            }
+         
+            this.showCurrentResultsViewType();
+        });
     }
 
     assignUpdateResultsListener() {
@@ -245,16 +269,10 @@ class ViewController {
 
                         $('.carousel-item').first().addClass('active');
                         $('.carousel-indicators > li').first().addClass('active');
-                        // @ts-ignore
-                        // $('#jobs-carousel').carousel();
-                      
-                        // this.setCarouselHeight();
 
+                        this.showResultsSwitch();
 
-
-                        this.showResultsTable();
-
-                        this.showResultsCarousel();
+                        this.showCurrentResultsViewType();
                     });
 
                 }, 2000);
@@ -291,25 +309,23 @@ class ViewController {
         });
     }
 
-    // setCarouselHeight() {
+    showCurrentResultsViewType() {
 
-    //     let id = "#jobs-carousel";
+        if (this._currentResultsViewType === "Carousel") {
 
-    //     let slideHeight = [];
+            this.hideResultsTable().then(() => {
 
-    //     $(id + ' .carousel-caption').each(function() {
+                this.showResultsCarousel();
+            });
+        }
+        else {
 
-    //         slideHeight.push($(this).height());
-    //     });
+            this.hideResultsCarousel().then(() => {
 
-    //     const max = Math.max.apply(null, slideHeight) + 250;
-
-    //     $(id + ' .carousel-item').each(function() {
-
-    //         // $(this).css('height', max + 'px;');
-    //         $(this).attr("style", "height: " + max + "px;");
-    //     });
-    // }
+                this.showResultsTable();
+            });
+        }
+    }
 
     gatherAllInputValues() {
 
@@ -516,5 +532,15 @@ class ViewController {
     showSearchIcon() {
 
         this._searchIcon.fadeTo(250, 1.0);
+    }
+
+    showResultsSwitch() {
+
+        this._switchWrapper.fadeTo(500, 1.0);
+    }
+
+    hideResultsSwitch() {
+
+        this._switchWrapper.fadeTo(250, 0.0);
     }
 }

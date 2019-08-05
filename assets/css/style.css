@@ -121,7 +121,7 @@ body {
 }
 
 #jobResultsTBLWrapper {
-    margin: 150px auto 150px auto;
+    margin: 0px auto 150px auto;
     width: 95%;
 }
 
@@ -157,7 +157,7 @@ body {
 
 #jobResultsTBL {
     border-radius: 5px;
-    border: 3px solid rgba(248,248,248,1.0);
+    border: 3px solid rgba(0,174,239,1.0);
     position: relative;
     top: 20px;
 }
@@ -204,7 +204,7 @@ body {
 }
 
 #jobsCarouselContainer {
-    margin: 150px 0px 150px 0px;
+    margin: 100px 0px 150px 0px;
     padding: 0;
     width: 100%;
 }
@@ -217,7 +217,7 @@ body {
 .carousel-item {
     background: rgba(48,48,48,1.0);
     border-radius: 5px;
-    border: 3px solid rgba(248,248,248,1.0);
+    border: 3px solid rgba(151,64,250,1.0);
     height: 500px;
     width: 100%;
 }
@@ -226,4 +226,105 @@ body {
     color: rgba(248,248,248,1.0);
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 20px;
- }
+}
+
+#switchWrapper {
+    margin-top: 150px;
+    width: 100%;
+}
+
+.switch-carousel-table .switch-label:after, .switch-carousel-table .switch-label:before {
+    border-radius: 10px;
+
+    height: 70%;
+    left: 0;
+    padding-top: 10%;	
+    text-align: center;
+    width: 100%;
+}
+
+.switch-carousel-table .switch-label:after {
+    background: rgba(48,48,48,1.0);
+    border: 2px solid rgba(0,174,239,1.0);
+	backface-visibility: hidden;
+	transform: rotateY(180deg);
+}
+
+.switch-carousel-table .switch-label:before {
+    background: rgba(48,48,48,1.0);
+    border: 2px solid rgba(151,64,250,1.0);
+	backface-visibility: hidden;
+}
+
+.switch-carousel-table .switch-input:checked ~ .switch-label {
+	background: rgba(18,18,18,1.0);
+}
+
+.switch-carousel-table .switch-input:checked ~ .switch-label:before {
+	transform: rotateY(180deg)
+}
+
+.switch-carousel-table .switch-input:checked ~ .switch-label:after {
+	transform: rotateY(0)
+}
+
+.switch {
+    box-sizing: content-box;
+	cursor: pointer;
+	display: block;
+    height: 35px;
+    margin: 0 auto;
+	padding: 0px;
+	width: 100px;
+}
+
+.switch-input {
+    display: none;
+}
+
+.switch-label {
+    display: block;
+	height: inherit;
+	position: relative;
+}
+
+.switch-label:before, .switch-label:after {
+    box-sizing: content-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    margin-top: -5%;
+	position: absolute;
+    line-height: 1;
+    transition: inherit;
+	-webkit-transition: inherit;
+	-moz-transition: inherit;
+	-o-transition: inherit;
+}
+
+.switch-label:before {
+	content: attr(data-off);
+    color: rgba(248,248,248,1.0);
+    font-weight: 600;
+}
+
+.switch-label:after {
+	content: attr(data-on);
+    color: rgba(248,248,248,1.0);
+    font-weight: 600;
+	opacity: 0;
+}
+
+.switch-input:checked ~ .switch-label:before {
+	opacity: 0;
+}
+
+.switch-input:checked ~ .switch-label:after {
+	opacity: 1;
+}
+
+.switch-label, .switch-handle {
+	transition: All 1.0s ease;
+	-webkit-transition: All 1.0s ease;
+	-moz-transition: All 1.0s ease;
+	-o-transition: All 1.0s ease;
+}

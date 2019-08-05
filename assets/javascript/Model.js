@@ -129,9 +129,7 @@ class Job {
 
         const applyHereBTN = '<button id=\"applyBTN\" onclick=\"window.open(\'' + this._link + '\',\'_blank\')\">Apply</button>';
 
-        const title = $("<span>").text(this._title).attr("style", "color: rgba(0,174,239,1.0);");
-
-        jobJSON.push(title[0].outerHTML);
+        jobJSON.push(this._title);
         jobJSON.push(this._location);
         jobJSON.push(this._company);
         jobJSON.push(this._salary);
