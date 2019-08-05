@@ -7,6 +7,27 @@ class ViewController {
 
         this._model = new Model();
 
+        this._header = $("#header");
+
+        this._techinLogoBig = $("#techinLogoBigWrapper");
+        this._techinLogo = $("#techinLogo");
+        this._jobTitleInput = $("#jobTitleInput");
+        this._jobLocationInput = $("#jobLocationInput");
+        this._jobLocationIcon = $("#locationIcon");
+        this._jobRadiusInput = $("#jobRadiusInput");
+        this._jobSalaryInput = $("#jobSalaryInput");
+
+        this._searchIcon = $("#searchIcon");
+        this._searchJobsSubmitBtn = $("#searchJobsSubmitBtn");
+
+        this._jobTitleValue = null;
+        this._locationValue = null;
+        this._radiusValue = null;
+        this._salaryValue = null;
+
+        this._loading = $("#loading");
+
+        this._jobResultsTBLWrapper = $("#jobResultsTBLWrapper");
         this._jobResultsTBL = $("#jobResultsTBL");
 
         // @ts-ignore
@@ -19,34 +40,65 @@ class ViewController {
                 { title: "Location" },
                 { title: "Company" },
                 { title: "Salary" },
-                { title: "Type" },
-                { title: "Source" },
-                { title: "Snippet" },
-                { title: "Updated" },
+                { title: "Posted" },
                 { title: "Link" }
+            ],
+            columnDefs: [
+                { targets: "_all", className: 'dt-center' }
             ]
         });
 
-        this._jobTitleInput = $("#jobTitleInput");
-        this._jobLocationInput = $("#jobLocationInput");
-        this._jobRadiusInput = $("#jobRadiusInput");
-        this._jobSalaryInput = $("#jobSalaryInput");
+        this._jobsCarouselContainer = $("#jobsCarouselContainer");
+        this._jobsCarousel = $("#jobs-carousel");
+        this._carouselIndicators = $("#carousel-indicators");
+        this._carouselInner = $("#carousel-inner");
 
-        this._searchIcon = $("#searchIcon");
-        this._searchJobsSubmitBtn = $("#searchJobsSubmitBtn");
+        this._isStartCompleted = false;
 
-        this._jobTitleValue = null;
-        this._locationValue = null;
-        this._radiusValue = null;
-        this._salaryValue = null;
+        this.startSequence();
 
         this.assignInputListeners();
 
-        this.assignUpdateTableListener();
+        this.assignUpdateResultsListener();
 
-        this.assignZipCodeListener();
+        this.assignZipCodeListeners();
+    }
 
-        // this._model.setZipCode();
+    startSequence() {
+
+        this.showBigLogo().then(() => {
+
+            setTimeout(() => {
+
+                this.hideBigLogo().then(() => {
+
+                    this.showHeader().then(() => {
+
+                        this.showLogo();
+
+                        setTimeout(() => { 
+                            
+                            this.showJobTitleInput();
+                            
+                            this._jobTitleInput.focus();
+
+                        }, 250);
+
+                        setTimeout(() => { this.showJobLocationInput(); }, 500);
+
+                        setTimeout(() => { this.showLocationIcon(); }, 750);
+
+                        setTimeout(() => { this.showJobRadiusInput(); }, 1000);
+
+                        setTimeout(() => { this.showJobSalaryInput(); }, 1250);
+
+                        setTimeout(() => { this.showSearchIcon(); }, 1500);
+
+                    });
+                });
+
+            }, 500);
+        });
     }
 
     assignInputListeners() {
@@ -59,7 +111,25 @@ class ViewController {
 
                 // this.resetInputValidation();
 
-                this._model.getJobsFromAPI(this._jobTitleValue, this._locationValue, this._radiusValue, this._salaryValue);
+                this.hideResultsCarousel();
+
+                this.hideResultsTable().then(() => {
+
+                    if (!this._isStartCompleted) {
+
+                        this._header.animate({ top: '0%' }, 1500).promise().then(() => {
+
+                            this._isStartCompleted = true;
+                        });
+                    }
+
+                    setTimeout(() => {
+
+                        this.showLoadingIndicator();
+
+                        this._model.getJobsFromAPI(this._jobTitleValue, this._locationValue, this._radiusValue, this._salaryValue);
+                    }, 500);
+                });
             }
         });
 
@@ -69,7 +139,7 @@ class ViewController {
 
             if (this._jobTitleValue.length === 0) {
 
-                this.removeValidationStyle(this._jobTitleInput);    
+                this.removeValidationStyle(this._jobTitleInput);
             }
             else if (Utility.isJobTitleInValid(this._jobTitleValue)) {
 
@@ -144,25 +214,102 @@ class ViewController {
         });
     }
 
-    assignUpdateTableListener() {
+    assignUpdateResultsListener() {
 
-        addEventListener("updateTable", () => {
+        addEventListener("updateResults", () => {
 
-            const jobsJSON = this._model.getAllJobsJSONForTable();
+            let promise = Utility.createPromise(() => this._isStartCompleted === true);
 
-            this._jobResultsDataTable.clear().rows.add(jobsJSON).draw(false);
+            promise.then(() => {
+
+                setTimeout(() => {
+
+                    this.hideLoadingIndicator().then(() => {
+
+                        const jobsJSON = this._model.getAllJobsJSONForTable();
+
+                        this._jobResultsDataTable.clear().rows.add(jobsJSON).draw(false);
+
+                        const carouselItems = this._model.getAllJobsForCarousel();
+
+                        this._carouselInner.empty();
+
+                        this._carouselIndicators.empty();
+
+                        for (let i = 0; i < carouselItems.length; i++) {
+
+                            this._carouselInner.append(carouselItems[i]);
+
+                            $('<li data-target="#jobs-carousel" data-slide-to="' + i + '"></li>').appendTo(this._carouselIndicators);
+                        }
+
+                        $('.carousel-item').first().addClass('active');
+                        $('.carousel-indicators > li').first().addClass('active');
+                        // @ts-ignore
+                        // $('#jobs-carousel').carousel();
+                      
+                        // this.setCarouselHeight();
+
+
+
+                        this.showResultsTable();
+
+                        this.showResultsCarousel();
+                    });
+
+                }, 2000);
+            });
         });
     }
 
-    assignZipCodeListener() {
+    assignZipCodeListeners() {
+
+        this._jobLocationIcon.mouseenter(() => {
+
+            this.showActiveLocationIcon();
+        });
+
+        this._jobLocationIcon.mouseleave(() => {
+
+            this.showInActiveLocationIcon();
+        });
+
+        this._jobLocationIcon.click(() => {
+
+            this._model.setZipCode();
+        });
 
         addEventListener("zipCodeReady", () => {
 
             const zipCode = this._model.getZipCode().toString();
-    
+
             this._jobLocationInput.val(zipCode);
+
+            this._jobLocationInput.focus();
+
+            this.isAllInputValid();
         });
     }
+
+    // setCarouselHeight() {
+
+    //     let id = "#jobs-carousel";
+
+    //     let slideHeight = [];
+
+    //     $(id + ' .carousel-caption').each(function() {
+
+    //         slideHeight.push($(this).height());
+    //     });
+
+    //     const max = Math.max.apply(null, slideHeight) + 250;
+
+    //     $(id + ' .carousel-item').each(function() {
+
+    //         // $(this).css('height', max + 'px;');
+    //         $(this).attr("style", "height: " + max + "px;");
+    //     });
+    // }
 
     gatherAllInputValues() {
 
@@ -193,7 +340,7 @@ class ViewController {
 
         let isValid = true;
 
-        if (this._jobTitleValue.length === 0 && this._locationValue.length === 0) { //&& this._radiusValue.length === 0 && this._salaryValue.length === 0) {
+        if (this._jobTitleValue.length === 0 && this._locationValue.length === 0) {
 
             this.resetInputValidation();
 
@@ -256,6 +403,16 @@ class ViewController {
         return isValid;
     }
 
+    showActiveLocationIcon() {
+
+        this._jobLocationIcon.attr("src", "./assets/images/locationIcon_Active.png");
+    }
+
+    showInActiveLocationIcon() {
+
+        this._jobLocationIcon.attr("src", "./assets/images/locationIcon_Inactive.png");
+    }
+
     showActiveSearchIcon() {
 
         this._searchIcon.attr("src", "./assets/images/searchIcon_Active.png");
@@ -279,5 +436,85 @@ class ViewController {
     markAsInValidStyle(element) {
 
         element.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
+    }
+
+    showLoadingIndicator() {
+
+        this._loading.fadeTo(500, 1.0);
+    }
+
+    hideLoadingIndicator() {
+
+        return this._loading.fadeTo(250, 0.0).promise();
+    }
+
+    showResultsTable() {
+
+        this._jobResultsTBLWrapper.fadeIn(500);
+    }
+
+    hideResultsTable() {
+
+        return this._jobResultsTBLWrapper.fadeOut(250).promise();
+    }
+
+    showResultsCarousel() {
+
+        this._jobsCarouselContainer.fadeIn(500);
+    }
+
+    hideResultsCarousel() {
+
+        return this._jobsCarouselContainer.fadeOut(250).promise();
+    }
+
+    showBigLogo() {
+
+        return this._techinLogoBig.fadeTo(2000, 1.0).promise();
+    }
+
+    hideBigLogo() {
+
+        return this._techinLogoBig.fadeTo(2000, 0.0).promise();
+    }
+
+    showHeader() {
+
+        return this._header.fadeTo(1000, 1.0).promise();
+    }
+
+    showLogo() {
+
+        this._techinLogo.fadeTo(250, 1.0);
+    }
+
+    showJobTitleInput() {
+
+        this._jobTitleInput.fadeTo(250, 1.0);
+    }
+
+    showJobLocationInput() {
+
+        this._jobLocationInput.fadeTo(250, 1.0);
+    }
+
+    showLocationIcon() {
+
+        this._jobLocationIcon.fadeTo(250, 1.0);
+    }
+
+    showJobRadiusInput() {
+
+        this._jobRadiusInput.fadeTo(250, 1.0);
+    }
+
+    showJobSalaryInput() {
+
+        this._jobSalaryInput.fadeTo(250, 1.0);
+    }
+
+    showSearchIcon() {
+
+        this._searchIcon.fadeTo(250, 1.0);
     }
 }

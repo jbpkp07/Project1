@@ -13,6 +13,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="https://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript"></script>
     <script src="https://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="./assets/css/reset.css" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css">
@@ -23,15 +25,18 @@
 
 <body>
 
-    <div id="header">
+    <div id="techinLogoBigWrapper" style="opacity: 0.0;">
+        <img id="techinLogoBig" src="./assets/images/Techin.png" alt="Techin Logo">
+    </div>
+
+    <div id="header" style="opacity: 0.0;">
         <div id="headerBox">
-            <img id="techinLogo" src="./assets/images/Techin.png" alt="Techin Logo">
+            <img id="techinLogo" src="./assets/images/Techin.png" alt="Techin Logo" style="opacity: 0.0;">
             <form id="searchJobsForm">
-                <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title">
-                <input id="jobLocationInput" class="form-control" type="text" placeholder="City State or Zip">
-                <img id="locationIcon" src="./assets/images/locationIcon_Inactive.png">
-                <!-- <input id="jobRadiusInput" class="form-control" type="text" placeholder="Radius"> -->
-                <select id="jobRadiusInput" name="jobRadiusInput">
+                <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title" style="opacity: 0.0;">
+                <input id="jobLocationInput" class="form-control" type="text" placeholder="City State or Zip" style="opacity: 0.0;">
+                <img id="locationIcon" src="./assets/images/locationIcon_Inactive.png" style="opacity: 0.0;">
+                <select id="jobRadiusInput" name="jobRadiusInput" style="opacity: 0.0;">
                     <option value="50">Distance</option>
                     <option value="5">5 miles</option>
                     <option value="10">10 miles</option>
@@ -39,8 +44,7 @@
                     <option value="25">25 miles</option>
                     <option value="50">50 miles</option>
                 </select>
-                <!-- <input id="jobSalaryInput" class="form-control" type="text" placeholder="Salary"> -->
-                <select id="jobSalaryInput" name="jobSalaryInput">
+                <select id="jobSalaryInput" name="jobSalaryInput" style="opacity: 0.0;">
                     <option value="33500">Salary</option>
                     <option value="33500">$33,500+</option>
                     <option value="50000">$50,000+</option>
@@ -48,17 +52,42 @@
                     <option value="150000">$150,000+</option>
                     <option value="200000">$200,000+</option>
                 </select>
-
                 <button id="searchJobsSubmitBtn" type="submit">
-                    <img id="searchIcon" src="./assets/images/searchIcon_Inactive.png">
+                    <img id="searchIcon" src="./assets/images/searchIcon_Inactive.png" style="opacity: 0.0;">
                 </button>
             </form>
         </div>
     </div>
 
-    <div id="jobResultsTBLWrapper">
+    <div id="loading" style="opacity: 0.0;">
+        <img id="loadingIcon" src="./assets/images/loading.gif">
+    </div>
+
+    <div id="jobResultsTBLWrapper" style="display: none;">
         <div id="jobResults">Job Results</div>
         <table id="jobResultsTBL" class="cell-border hover"></table>
+    </div>
+
+    <div id="jobsCarouselContainer" class="container-fluid" style="display: none;">
+        <div class="row">
+            <div class="col-12">
+                <div id="jobs-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <!-- wrapper for indicators -->
+                    <ol id="carousel-indicators" class="carousel-indicators"></ol>
+                    <!-- wrapper for slides -->
+                    <div id="carousel-inner" class="carousel-inner"></div>
+                </div>
+                <!-- controls -->
+                <a class="carousel-control-prev" href="#jobs-carousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#jobs-carousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <script src="./assets/joobleBackupJSON/jooble.js"></script>

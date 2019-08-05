@@ -17,9 +17,20 @@ body {
     width: 100%;
 }
 
+#techinLogoBigWrapper {
+    position: fixed;
+    top: 40%;
+    width: 100%;
+}
+
+#techinLogoBig {
+    display: block;
+    margin: 0 auto;
+}
+
 #header {
     position: fixed;
-    top: 0;
+    top: 40%;
     width: 100%;
     z-index: 1;
 }
@@ -57,6 +68,7 @@ body {
     height: 36px;
     margin-right: 10px;
     outline: none;
+    text-decoration: none;
 }
 
 #jobTitleInput, #jobLocationInput {
@@ -77,7 +89,7 @@ body {
     margin-right: 0px;
     position: relative;
     top: -1px;
-    width: 25px;
+    width: 22px;
 }
 
 #searchJobsSubmitBtn {
@@ -96,25 +108,20 @@ body {
     width: 34px;
 }
 
+#loading {
+    position: fixed;
+    top: 40%;
+    width: 100%;
+}
 
-
-
-
-
-
-
-/* Needs Colors to be checked */
-
-
-
-
-
-
-
+#loadingIcon {
+    display: block;
+    margin: 0 auto;
+    width: 125px;
+}
 
 #jobResultsTBLWrapper {
-    margin: 150px auto 50px auto;
-    /* overflow-y: hidden; */
+    margin: 150px auto 150px auto;
     width: 95%;
 }
 
@@ -126,14 +133,14 @@ body {
 }
 
 #jobResultsTBL_length, #jobResultsTBL_filter {
-    color: rgb(240,240,240);
+    color: rgba(248,248,248,1.0);
 }
 
 #jobResultsTBL_length select, #jobResultsTBL_filter input {
-    background: rgb(32, 32, 32);
-    border: 3px solid rgba(240,240,240,1.0);
+    background: rgba(18,18,18,1.0);
+    border: 3px solid rgba(248,248,248,1.0);
     border-radius: 10px;
-    color: rgb(240,240,240);
+    color: rgba(248,248,248,1.0);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     height: 36px;
@@ -150,22 +157,22 @@ body {
 
 #jobResultsTBL {
     border-radius: 5px;
-    border: 3px solid rgb(240,240,240);
+    border: 3px solid rgba(248,248,248,1.0);
     position: relative;
     top: 20px;
 }
 
 #jobResultsTBL thead {
-    background: rgb(64,64,64);
+    background: rgba(48,48,48,1.0);
     width: 100%;
 }
 
 #jobResultsTBL .odd {
-    background: rgb(32, 32, 32);
+    background: rgba(18,18,18,1.0);
 }
 
 #jobResultsTBL .even {
-    background: rgb(40, 40, 40);
+    background: rgba(26,26,26,1.0);
 }
 
 #jobResultsTBL_paginate {
@@ -175,22 +182,48 @@ body {
 
 #jobResultsTBL_paginate a {
     border-radius: 5px;
-    border: 2px solid rgb(240,240,240);
+    border: 2px solid rgb(248,248,248);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     font-weight: 700;
 }
 
-.applyBTN {
+#applyBTN {
     background: rgba(18,18,18,1.0);
-    border: 2px solid rgba(240,240,240,0.75);
+    border: 2px solid rgba(248,248,248,1.0);
     border-radius: 10px;
+    box-shadow: none;
     color: rgba(255,255,255,1.0);
+    display: inline-block;
     outline: none;
-    padding: 9px 10px 8px 10px;
+    padding: 5px 8px 5px 8px;
 }
 
-.applyBTN:hover {
-    border: 2px solid rgba(255,255,255,1.0);
-    color: rgba(255,255,255,1.0);
+#applyBTN:hover {
+    border: 2px solid rgba(42,252,156,1.0);
 }
+
+#jobsCarouselContainer {
+    margin: 150px 0px 150px 0px;
+    padding: 0;
+    width: 100%;
+}
+
+#carousel-inner {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.carousel-item {
+    background: rgba(48,48,48,1.0);
+    border-radius: 5px;
+    border: 3px solid rgba(248,248,248,1.0);
+    height: 500px;
+    width: 100%;
+}
+
+.carousel-caption {
+    color: rgba(248,248,248,1.0);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+ }

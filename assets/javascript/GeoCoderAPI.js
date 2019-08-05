@@ -30,6 +30,10 @@ class GeoCoderAPI {
                 this.reverseGeocode();
             });
         }
+        else {
+
+            dispatchEvent(new CustomEvent("zipCodeReady"));
+        }
     }
 
     getLatLongFromBrowser() {

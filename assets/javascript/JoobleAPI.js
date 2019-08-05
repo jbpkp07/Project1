@@ -5,12 +5,13 @@ class JoobleAPI {
 
     constructor() {
 
-        this._apiRoot = "https://us.jooble.org/api/";
+        this._apiRoot = "https://cors-anywhere.herokuapp.com/https://us.jooble.org/api/";
         this._apiKey = "90cb62a5-06c3-4da7-984e-5203f2c4e6cf";
 
         this._joobleJSONRequest = null;
         this._page = 1;
         this._isNewSearch = false;
+        this._isLastPageReached = false;
 
         this._apiResponse = null;
         this._areJobsConsumed = false;
@@ -24,6 +25,7 @@ class JoobleAPI {
         salary = salary.trim();
 
         this._isNewSearch = false;
+        this._isLastPageReached = false;
 
         //Very first search, or new search parameters, reset page back to 1
         if (this._joobleJSONRequest === null || !this._joobleJSONRequest.isSameRequest(keywords, location, radius, salary)) {
@@ -38,10 +40,14 @@ class JoobleAPI {
 
             this._page++;
 
-            //If existing apiResponse returned less than 20 jobs, reset page back to 1
+            //If existing apiResponse returned less than 20 jobs, reset page back to 1 and return (no additional results)
             if (this._apiResponse.jobs.length < 20) {
 
                 this._page = 1;
+
+                this._isLastPageReached = true;
+
+                return Utility.createPromise(() => this._areJobsConsumed === true);
             }
         }
 
@@ -62,7 +68,7 @@ class JoobleAPI {
 
         }).catch(() => {
 
-            alert("Class:JoobleAPI:getJobsFromAPI Jooble API did not respond correctly");
+            // alert("Class:JoobleAPI:getJobsFromAPI Jooble API did not respond correctly");
 
             //Use offloaded jobs JSON data instead for presentation purposes. Jooble's API has had inconsistent uptime. Oh well...
             // @ts-ignore
