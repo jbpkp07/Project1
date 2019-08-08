@@ -18,7 +18,9 @@ class Model {
 
         promise.then(() => {
 
-            if (this._joobleAPI._isLastPageReached) {
+            if (this._joobleAPI.isLastPageReached()) {
+
+                console.log("Last Jooble API page reached for current search query.");
 
                 dispatchEvent(new CustomEvent("updateResults"));
 
@@ -147,11 +149,23 @@ class Job {
 
         const slideHeading = $("<h1>").text(this._title);
 
-        const location = $("<h6>").html("Location: &nbsp;&nbsp;" + this._location);
+        const locationLabel = $("<span>").html("Location &nbsp;&nbsp;").attr("style", "color: rgba(0,174,239,1.0); font-weight: 600;");
 
-        const snippet = $("<p>").html("<p> Snippet: &nbsp;&nbsp;" + this._snippet + "</p>");
+        const locationText = $("<span>").html(this._location);
 
-        const company = $("<h6>").html("Company: &nbsp;&nbsp;" + this._company);
+        const location = $("<h6>").append(locationLabel).append(locationText);
+
+        const companyLabel = $("<span>").html("Company &nbsp;&nbsp;").attr("style", "color: rgba(0,174,239,1.0); font-weight: 600;");
+
+        const companyText = $("<span>").html(this._company);
+
+        const company = $("<h6>").append(companyLabel).append(companyText);
+
+        const snippetLabel = $("<span>").html("Snippet &nbsp;&nbsp;").attr("style", "color: rgba(0,174,239,1.0); font-weight: 600;");
+
+        const snippetText = $("<span>").html(this._snippet);
+
+        const snippet = $("<p>").append(snippetLabel).append(snippetText);
 
         const applyHereBTN = '<button id=\"applyBTN\" onclick=\"window.open(\'' + this._link + '\',\'_blank\')\">Apply</button>';
 

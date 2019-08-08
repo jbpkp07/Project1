@@ -9,8 +9,9 @@ class ViewController {
 
         this._header = $("#header");
 
-        this._techinLogoBig = $("#techinLogoBigWrapper");
-        this._techinLogo = $("#techinLogo");
+        this._techinLogoBigWrapper = $("#techinLogoBigWrapper");
+        this._techinLogoBigIMG = $("#techinLogoBig");
+        this._techinLogoIMG = $("#techinLogo");
         this._jobTitleInput = $("#jobTitleInput");
         this._jobLocationInput = $("#jobLocationInput");
         this._jobLocationIcon = $("#locationIcon");
@@ -63,9 +64,9 @@ class ViewController {
 
         this.assignInputListeners();
 
-        this.assignUpdateResultsListener();
-
         this.assignZipCodeListeners();
+
+        this.assignUpdateResultsListener();
     }
 
     startSequence() {
@@ -74,30 +75,27 @@ class ViewController {
 
             setTimeout(() => {
 
-                this.hideBigLogo().then(() => {
+                this.slideBigLogo().then(() => {
 
+                    this.showLogo();
+                    
                     this.showHeader().then(() => {
 
-                        this.showLogo();
+                        this.hideBigLogo();
 
-                        setTimeout(() => { 
-                            
-                            this.showJobTitleInput();
-                            
-                            this._jobTitleInput.focus();
+                        this.showJobTitleInput();
 
-                        }, 250);
+                        this.showJobLocationInput();
 
-                        setTimeout(() => { this.showJobLocationInput(); }, 500);
+                        this.showLocationIcon();
 
-                        setTimeout(() => { this.showLocationIcon(); }, 750);
+                        this.showJobRadiusInput();
 
-                        setTimeout(() => { this.showJobRadiusInput(); }, 1000);
+                        this.showJobSalaryInput();
 
-                        setTimeout(() => { this.showJobSalaryInput(); }, 1250);
+                        this.showSearchIcon();
 
-                        setTimeout(() => { this.showSearchIcon(); }, 1500);
-
+                        this._jobTitleInput.focus();
                     });
                 });
 
@@ -106,6 +104,11 @@ class ViewController {
     }
 
     assignInputListeners() {
+
+        this._techinLogoIMG.click(() => {
+
+            this.resetInputValues();
+        });
 
         this._searchJobsSubmitBtn.click((event) => {
 
@@ -121,18 +124,25 @@ class ViewController {
 
                     if (!this._isStartCompleted) {
 
-                        this._header.animate({ top: '0%' }, 1500).promise().then(() => {
+                        this.slideHeaderUp().then(() => {
 
                             this._isStartCompleted = true;
                         });
-                    }
 
-                    setTimeout(() => {
+                        setTimeout(() => {
+
+                            this.showLoadingIndicator();
+
+                            this._model.getJobsFromAPI(this._jobTitleValue, this._locationValue, this._radiusValue, this._salaryValue);
+
+                        }, 500);  //Delay allows header to clear before loading indicator displays
+                    }
+                    else {
 
                         this.showLoadingIndicator();
 
                         this._model.getJobsFromAPI(this._jobTitleValue, this._locationValue, this._radiusValue, this._salaryValue);
-                    }, 500);
+                    }
                 });
             }
         });
@@ -233,50 +243,8 @@ class ViewController {
 
                 this._resultsSwitch.val("Carousel");
             }
-         
+
             this.showCurrentResultsViewType();
-        });
-    }
-
-    assignUpdateResultsListener() {
-
-        addEventListener("updateResults", () => {
-
-            let promise = Utility.createPromise(() => this._isStartCompleted === true);
-
-            promise.then(() => {
-
-                setTimeout(() => {
-
-                    this.hideLoadingIndicator().then(() => {
-
-                        const jobsJSON = this._model.getAllJobsJSONForTable();
-
-                        this._jobResultsDataTable.clear().rows.add(jobsJSON).draw(false);
-
-                        const carouselItems = this._model.getAllJobsForCarousel();
-
-                        this._carouselInner.empty();
-
-                        this._carouselIndicators.empty();
-
-                        for (let i = 0; i < carouselItems.length; i++) {
-
-                            this._carouselInner.append(carouselItems[i]);
-
-                            $('<li data-target="#jobs-carousel" data-slide-to="' + i + '"></li>').appendTo(this._carouselIndicators);
-                        }
-
-                        $('.carousel-item').first().addClass('active');
-                        $('.carousel-indicators > li').first().addClass('active');
-
-                        this.showResultsSwitch();
-
-                        this.showCurrentResultsViewType();
-                    });
-
-                }, 2000);
-            });
         });
     }
 
@@ -309,6 +277,58 @@ class ViewController {
         });
     }
 
+    assignUpdateResultsListener() {
+
+        addEventListener("updateResults", () => {
+
+            let promise = Utility.createPromise(() => this._isStartCompleted === true);
+
+            promise.then(() => {
+
+                setTimeout(() => {
+
+                    this.hideLoadingIndicator().then(() => {
+
+                        this.reDrawTable();
+
+                        this.reDrawCarousel();
+
+                        this.showResultsSwitch();
+
+                        this.showCurrentResultsViewType();
+                    });
+
+                }, 1500);
+            });
+        });
+    }
+
+    reDrawTable() {
+
+        const jobsJSON = this._model.getAllJobsJSONForTable();
+
+        this._jobResultsDataTable.clear().rows.add(jobsJSON).draw(false);
+    }
+
+    reDrawCarousel() {
+
+        const carouselItems = this._model.getAllJobsForCarousel();
+
+        this._carouselInner.empty();
+
+        this._carouselIndicators.empty();
+
+        for (let i = 0; i < carouselItems.length; i++) {
+
+            this._carouselInner.append(carouselItems[i]);
+
+            $('<li id="jobCarouselIndicator" data-target="#jobs-carousel" data-slide-to="' + i + '"></li>').appendTo(this._carouselIndicators);
+        }
+
+        $('.carousel-item').first().addClass('active');
+        $('.carousel-indicators > li').first().addClass('active');
+    }
+
     showCurrentResultsViewType() {
 
         if (this._currentResultsViewType === "Carousel") {
@@ -335,17 +355,22 @@ class ViewController {
         this._salaryValue = this._jobSalaryInput.val().toString().trim();
     }
 
+    resetInputValues() {
+
+        this._jobTitleInput.val("");
+        this._jobLocationInput.val("");
+        this._jobRadiusInput.val("50");
+        this._jobSalaryInput.val("33500");
+
+        this.resetInputValidation();
+    }
+
     resetInputValidation() {
 
         this.removeValidationStyle(this._jobTitleInput);
         this.removeValidationStyle(this._jobLocationInput);
         this.removeValidationStyle(this._jobRadiusInput);
         this.removeValidationStyle(this._jobSalaryInput);
-
-        // this._jobTitleInput.val("");
-        // this._jobLocationInput.val("");
-        // this._jobRadiusInput.val("");
-        // this._jobSalaryInput.val("");
 
         this.showInActiveSearchIcon();
     }
@@ -441,17 +466,17 @@ class ViewController {
 
     removeValidationStyle(element) {
 
-        element.attr("style", "");
+        element.css("border", "");
     }
 
     markAsValidStyle(element) {
 
-        element.attr("style", "border: 2px solid rgba(42,252,156,1.0);");
+        element.css("border", "2px solid rgba(42,252,156,1.0)");
     }
 
     markAsInValidStyle(element) {
 
-        element.attr("style", "border: 2px solid rgba(251,103,105,1.0);");
+        element.css("border", "2px solid rgba(251,103,105,1.0)");
     }
 
     showLoadingIndicator() {
@@ -486,47 +511,65 @@ class ViewController {
 
     showBigLogo() {
 
-        return this._techinLogoBig.fadeTo(2000, 1.0).promise();
+        return this._techinLogoBigWrapper.fadeTo(1500, 1.0).promise();
+    }
+
+    slideBigLogo() {
+
+        const toTop = this._techinLogoIMG.offset().top;
+        const toLeft = this._techinLogoIMG.offset().left;
+
+        const fromLeft = this._techinLogoBigIMG.offset().left;
+
+        this._techinLogoBigIMG.attr("style", "position: fixed; left: " + Math.floor(fromLeft) + "px;");
+
+        return this._techinLogoBigIMG.animate({ width: "164px", height: "60px", top: toTop, left: toLeft }, 750).promise();
     }
 
     hideBigLogo() {
 
-        return this._techinLogoBig.fadeTo(2000, 0.0).promise();
+        this._techinLogoBigIMG.hide(0);
     }
 
     showHeader() {
 
-        return this._header.fadeTo(1000, 1.0).promise();
+        return this._header.fadeTo(500, 1.0).promise();
+    }
+
+    slideHeaderUp() {
+
+        return this._header.animate({ top: '0%' }, 750).promise();
     }
 
     showLogo() {
 
-        this._techinLogo.fadeTo(250, 1.0);
+        this._techinLogoIMG.fadeTo(0, 1.0);
+        // this._techinLogoIMG.animate({ top: "21.5%", opacity: "1.0" }, 750);
     }
 
     showJobTitleInput() {
 
-        this._jobTitleInput.fadeTo(250, 1.0);
+        this._jobTitleInput.animate({ width: "25%", opacity: "1.0" }, 750);
     }
 
     showJobLocationInput() {
 
-        this._jobLocationInput.fadeTo(250, 1.0);
+        this._jobLocationInput.animate({ width: "25%", opacity: "1.0" }, 750);
     }
 
     showLocationIcon() {
 
-        this._jobLocationIcon.fadeTo(250, 1.0);
+        this._jobLocationIcon.fadeTo(750, 1.0);
     }
 
     showJobRadiusInput() {
 
-        this._jobRadiusInput.fadeTo(250, 1.0);
+        this._jobRadiusInput.animate({ width: "13%", opacity: "1.0" }, 750);
     }
 
     showJobSalaryInput() {
 
-        this._jobSalaryInput.fadeTo(250, 1.0);
+        this._jobSalaryInput.animate({ width: "15%", opacity: "1.0" }, 750);
     }
 
     showSearchIcon() {

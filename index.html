@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>TechIn v1.1</title>
+    <title>TechIn v2.0</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico">
 
@@ -33,17 +33,9 @@
         <div id="headerBox">
             <img id="techinLogo" src="./assets/images/Techin.png" alt="Techin Logo" style="opacity: 0.0;">
             <form id="searchJobsForm">
-                <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title" style="opacity: 0.0;">
-                <input id="jobLocationInput" class="form-control" type="text" placeholder="City State or Zip" style="opacity: 0.0;">
+                <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title" spellcheck="false" style="opacity: 0.0;">
+                <input id="jobLocationInput" class="form-control" type="text" placeholder="City State or Zip" spellcheck="false" style="opacity: 0.0;">
                 <img id="locationIcon" src="./assets/images/locationIcon_Inactive.png" style="opacity: 0.0;">
-                <select id="jobRadiusInput" name="jobRadiusInput" style="opacity: 0.0;">
-                    <option value="50">Distance</option>
-                    <option value="5">5 miles</option>
-                    <option value="10">10 miles</option>
-                    <option value="15">15 miles</option>
-                    <option value="25">25 miles</option>
-                    <option value="50">50 miles</option>
-                </select>
                 <select id="jobSalaryInput" name="jobSalaryInput" style="opacity: 0.0;">
                     <option value="33500">Salary</option>
                     <option value="33500">$33,500+</option>
@@ -51,6 +43,14 @@
                     <option value="100000">$100,000+</option>
                     <option value="150000">$150,000+</option>
                     <option value="200000">$200,000+</option>
+                </select>
+                <select id="jobRadiusInput" name="jobRadiusInput" style="opacity: 0.0;">
+                        <option value="50">Distance</option>
+                        <option value="5">5 miles</option>
+                        <option value="10">10 miles</option>
+                        <option value="15">15 miles</option>
+                        <option value="25">25 miles</option>
+                        <option value="50">50 miles</option>
                 </select>
                 <button id="searchJobsSubmitBtn" type="submit">
                     <img id="searchIcon" src="./assets/images/searchIcon_Inactive.png" style="opacity: 0.0;">
@@ -62,7 +62,7 @@
     <div id="switchWrapper" style="opacity: 0.0;">
         <label class="switch switch-carousel-table">
         <input id="resultsSwitch" class="switch-input" type="checkbox" value="Carousel">
-        <span class="switch-label" data-on="Table" data-off="Carousel"></span> <span class="switch-handle"></span> </label>
+        <span class="switch-label" data-on="Show Slides" data-off="Show Table"></span> <span class="switch-handle"></span> </label>
     </div>
 
     <div id="loading" style="opacity: 0.0;">
@@ -76,6 +76,7 @@
 
 
     <div id="jobsCarouselContainer" class="container-fluid" style="display: none;">
+        <div id="jobResultsCarousel">Job Results</div>
         <div class="row">
             <div class="col-12">
                 <div id="jobs-carousel" class="carousel slide" data-ride="carousel" data-interval="false">

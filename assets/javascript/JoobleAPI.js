@@ -6,7 +6,13 @@ class JoobleAPI {
     constructor() {
 
         this._apiRoot = "https://cors-anywhere.herokuapp.com/https://us.jooble.org/api/";
-        this._apiKey = "90cb62a5-06c3-4da7-984e-5203f2c4e6cf";
+        this._apiKeys = [];
+
+        this._apiKeys.push("dfb10486-b958-4acd-bf42-d94fc3d27862"); //first attempt
+        this._apiKeys.push("865766bc-4b97-4d89-ab0d-804949ff6e6d"); //second attempt
+        this._apiKeys.push("90cb62a5-06c3-4da7-984e-5203f2c4e6cf"); //third attempt
+
+        this._connectionAttempt = 0;
 
         this._joobleJSONRequest = null;
         this._page = 1;
@@ -51,9 +57,16 @@ class JoobleAPI {
             }
         }
 
+        this.postToAPI();
+
+        return Utility.createPromise(() => this._areJobsConsumed === true);
+    }
+
+    postToAPI() {
+
         const connection =
         {
-            url: this._apiRoot + this._apiKey,
+            url: this._apiRoot + this._apiKeys[this._connectionAttempt],
             method: "POST",
             data: this._joobleJSONRequest.getJSONAPIRequestOBJ(this._page)
         };
@@ -64,27 +77,45 @@ class JoobleAPI {
             
             this._apiResponse = response;
      
+            this._connectionAttempt = 0;
+
             this._areJobsConsumed = true;
 
         }).catch(() => {
 
-            // alert("Class:JoobleAPI:getJobsFromAPI Jooble API did not respond correctly");
+            if (this._connectionAttempt === this._apiKeys.length - 1) { //final attempt failed
+  
+                alert("Jooble API did not respond correctly after final attempt.\rLoading sample data likely unrelated to your search.");
 
-            //Use offloaded jobs JSON data instead for presentation purposes. Jooble's API has had inconsistent uptime. Oh well...
-            // @ts-ignore
-            this._apiResponse = joobleBackupData;
+                //Use offloaded jobs JSON data instead for presentation purposes. Jooble's API has had inconsistent uptime. Oh well...
+                // @ts-ignore
+                this._apiResponse = joobleBackupData;
+    
+                this._isNewSearch = true; //Treated as new search because we are using offloaded data.
+    
+                this._connectionAttempt = 0;
 
-            this._isNewSearch = true; //Treated as new search because we are using offloaded data.
+                this._areJobsConsumed = true;
+            }
+            else {
 
-            this._areJobsConsumed = true;
+                console.log("Jooble API did not respond correctly. Re-trying with different API key.");
+                
+                this._connectionAttempt++;
+
+                this.postToAPI();  //try again with different API key
+            }
         });
-
-        return Utility.createPromise(() => this._areJobsConsumed === true);
     }
 
     isNewSearch() {
 
         return this._isNewSearch;
+    }
+
+    isLastPageReached() {
+
+        return this._isLastPageReached;
     }
 
     getAPIResponseJobs() {
