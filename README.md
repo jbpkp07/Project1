@@ -1,4 +1,4 @@
-#Project 1  ("TechIn")
+# Project1  ("TechIn")
 
 Live-link : https://jbpkp07.github.io/Project1
 
