@@ -2,7 +2,7 @@
 
 Live-link : https://jbpkp07.github.io/Project1
 
-TechIn is a job search website with a focus in technology and web developemt jobs.
+TechIn is a job search website with a focus on technology and web developemt jobs. It has a dark theme to target the coder market!
 
 Description :
 
