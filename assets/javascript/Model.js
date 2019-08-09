@@ -147,7 +147,24 @@ class Job {
 
         const carouselCaption = $("<div>").addClass("carousel-caption d-none d-block");
 
-        const slideHeading = $("<h1>").text(this._title);
+        let slideHeading;
+
+        if (this._title.length <= 80) {
+
+            slideHeading = $("<h1>").text(this._title);
+        }
+        else if (this._title.length <= 100) {
+
+            slideHeading = $("<h2>").text(this._title);
+        }
+        else if (this._title.length <= 120) {
+
+            slideHeading = $("<h3>").text(this._title);
+        }
+        else {
+
+            slideHeading = $("<h4>").text(this._title);
+        }
 
         const locationLabel = $("<span>").html("Location &nbsp;&nbsp;").attr("style", "color: rgba(0,174,239,1.0); font-weight: 600;");
 

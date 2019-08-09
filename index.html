@@ -52,10 +52,17 @@
                         <option value="25">25 miles</option>
                         <option value="50">50 miles</option>
                 </select>
+                <button id="searchJobsClearBtn" type="button">
+                    <img id="clearIcon" src="./assets/images/clearIcon_Inactive.png" style="opacity: 0.0;">
+                </button>
                 <button id="searchJobsSubmitBtn" type="submit">
                     <img id="searchIcon" src="./assets/images/searchIcon_Inactive.png" style="opacity: 0.0;">
                 </button>
             </form>
+        </div>
+        <div id="startYourSearch">
+            Start your search... 
+            <img id="startYourSearchIcon" src="./assets/images/arrow.png">
         </div>
     </div>
 
@@ -73,7 +80,6 @@
         <div id="jobResults">Job Results</div>
         <table id="jobResultsTBL" class="cell-border hover"></table>
     </div>
-
 
     <div id="jobsCarouselContainer" class="container-fluid" style="display: none;">
         <div id="jobResultsCarousel">Job Results</div>

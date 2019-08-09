@@ -23,11 +23,8 @@ body {
 }
 
 #techinLogoBig {
-    /* position: fixed; */
-    /* position: relative; */
     display: block;
     margin: 0 auto;
-    /* left: 35%; */
 }
 
 #header {
@@ -53,9 +50,6 @@ body {
     height: 60px;
     margin: 10px 10px 10px 10px;
     position: relative;
-    /* top: -750%; */
-    /* width: 164px; */
-    /* background: red; */
 }
 
 #searchJobsForm {
@@ -98,11 +92,11 @@ body {
     width: 22px;
 }
 
-#searchJobsSubmitBtn {
+#searchJobsSubmitBtn, #searchJobsClearBtn, #startYourSearchIcon {
     background: rgba(48,48,48,1.0);
     border: 0;
     height: 36px;
-    margin-left: -4px;
+    margin-left: -5px;
     margin-right: 10px;
     outline: none;
     padding: 0;
@@ -110,8 +104,22 @@ body {
     top: -2px;
 }
 
-#searchIcon {
+#searchIcon, #clearIcon, #startYourSearchIcon {
     width: 34px;
+}
+
+#startYourSearchIcon {
+    background: rgba(18,18,18,1.0);
+    top: -11px;
+}
+
+#startYourSearch {
+    font-size: 18pt;
+    left: 100%;
+    margin-top: 30px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
 
 #loading {
@@ -251,8 +259,7 @@ body {
 
 .carousel-caption {
     background: rgba(32,32,32,1.0);
-    border: 2px solid rgba(0,0,0,1.0);
-    /* border: 1px solid rgba(0,174,239,1.0); */
+    border: 3px solid rgba(18,18,18,1.0);
     border-radius: 10px;
     color: rgba(248,248,248,1.0);
     font-family: Arial, Helvetica, sans-serif;

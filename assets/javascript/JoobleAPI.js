@@ -8,9 +8,11 @@ class JoobleAPI {
         this._apiRoot = "https://cors-anywhere.herokuapp.com/https://us.jooble.org/api/";
         this._apiKeys = [];
 
-        this._apiKeys.push("dfb10486-b958-4acd-bf42-d94fc3d27862"); //first attempt
-        this._apiKeys.push("865766bc-4b97-4d89-ab0d-804949ff6e6d"); //second attempt
-        this._apiKeys.push("90cb62a5-06c3-4da7-984e-5203f2c4e6cf"); //third attempt
+        //API keys are only good for 500 requests, so we have some backups to extend usage ;-)
+        this._apiKeys.push("3531ac66-d0c2-4e98-9aa2-ad8a5ac15f43"); //first attempt
+        this._apiKeys.push("dfb10486-b958-4acd-bf42-d94fc3d27862"); //second attempt
+        this._apiKeys.push("865766bc-4b97-4d89-ab0d-804949ff6e6d"); //third attempt
+        this._apiKeys.push("90cb62a5-06c3-4da7-984e-5203f2c4e6cf"); //fourth attempt
 
         this._connectionAttempt = 0;
 
