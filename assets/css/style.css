@@ -288,14 +288,14 @@ body {
 
 .switch-carousel-table .switch-label:after {
     background: rgba(18,18,18,1.0);
-    border: 2px solid rgba(0,174,239,1.0);
+    border: 2px solid rgba(248,248,248,1.0);
 	backface-visibility: hidden;
 	transform: rotateY(180deg);
 }
 
 .switch-carousel-table .switch-label:before {
     background: rgba(18,18,18,1.0);
-    border: 2px solid rgba(0,174,239,1.0);
+    border: 2px solid rgba(248,248,248,1.0);
 	backface-visibility: hidden;
 }
 
