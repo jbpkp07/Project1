@@ -147,7 +147,7 @@ class ViewController {
 
                             this._model.getJobsFromAPI(this._jobTitleValue, this._locationValue, this._radiusValue, this._salaryValue);
 
-                        }, 500);  //Delay allows header to clear before loading indicator displays
+                        }, 750);  //Delay allows header to clear before loading indicator displays
                     }
                     else {
 
@@ -592,7 +592,7 @@ class ViewController {
 
         const fromLeft = this._techinLogoBigIMG.offset().left;
 
-        this._techinLogoBigIMG.attr("style", "position: fixed; left: " + Math.floor(fromLeft) + "px;");
+        this._techinLogoBigIMG.attr("style", "position: fixed; left: " + fromLeft + "px;");
 
         return this._techinLogoBigIMG.animate({ width: "164px", height: "60px", top: toTop, left: toLeft }, 750).promise();
     }
@@ -659,7 +659,16 @@ class ViewController {
 
     hideStartYourSearch() {
 
-        this._startYourSearch.hide(0);
+        const currentTop = this._startYourSearch.offset().top;
+        
+        const currentLeft = this._startYourSearch.offset().left;
+
+        this._startYourSearch.attr("style", "margin-top: 0px; position: fixed; top: " + currentTop + "px; left: " + currentLeft + "px;");
+
+        this._startYourSearch.animate({ top: "100%" }, 750).promise().then(() => {
+
+            this._startYourSearch.hide(0);
+        });
     }
 
     showResultsSwitch() {
