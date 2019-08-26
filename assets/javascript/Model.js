@@ -14,7 +14,7 @@ class Model {
 
     getJobsFromAPI(keywords, location, radius, salary) {
 
-        let promise = this._joobleAPI.sendRequestToAPI(keywords, location, radius, salary);
+        const promise = this._joobleAPI.sendRequestToAPI(keywords, location, radius, salary);
 
         promise.then(() => {
 
@@ -32,7 +32,7 @@ class Model {
                 this._jobs = [];
             }
 
-            for (let apiJobOBJ of this._joobleAPI.getAPIResponseJobs()) {
+            for (const apiJobOBJ of this._joobleAPI.getAPIResponseJobs()) {
 
                 this._jobs.push(new Job(apiJobOBJ));
             }
@@ -43,9 +43,9 @@ class Model {
 
     getAllJobsJSONForTable() {
 
-        let jobsJSON = [];
+        const jobsJSON = [];
 
-        for (let job of this._jobs) {
+        for (const job of this._jobs) {
 
             jobsJSON.push(job.getJobJSONForTable());
         }
@@ -55,9 +55,9 @@ class Model {
 
     getAllJobsForCarousel() {
 
-        let carouselItems = [];
+        const carouselItems = [];
 
-        for (let job of this._jobs) {
+        for (const job of this._jobs) {
 
             carouselItems.push(job.getJobCarouselItem());
         }
@@ -127,7 +127,7 @@ class Job {
 
     getJobJSONForTable() {
 
-        let jobJSON = [];
+        const jobJSON = [];
 
         const applyHereBTN = '<button id=\"applyBTN\" onclick=\"window.open(\'' + this._link + '\',\'_blank\')\">Apply</button>';
 

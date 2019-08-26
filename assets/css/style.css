@@ -16,6 +16,14 @@ body {
     width: 100%;
 }
 
+.hidden {
+    opacity: 0.0;
+}
+
+.displayNone {
+    display: none;
+}
+
 #techinLogoBigWrapper {
     position: fixed;
     top: 40%;

@@ -52,9 +52,9 @@ class Utility {
 
         if (location.length === 2) {
 
-            let locationUpper = location.toUpperCase();
+            const locationUpper = location.toUpperCase();
 
-            let states = ["AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA",
+            const states = ["AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA",
                 "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT",
                 "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC",
                 "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"];
@@ -125,14 +125,3 @@ class Utility {
         return false;
     }
 }
-
-// @ts-ignore
-const isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-const isEdge = navigator.userAgent.indexOf("Edge") > -1;
-// @ts-ignore
-const isChrome = !!window.chrome && !isOpera && !isEdge;
-// @ts-ignore
-const isExplorer = typeof document !== 'undefined' && !!document.documentMode && !isEdge;
-// @ts-ignore
-const isFirefox = typeof window.InstallTrigger !== 'undefined';
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);

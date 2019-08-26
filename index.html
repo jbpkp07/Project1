@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>TechIn v2.02</title>
+    <title>TechIn v2.03</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico">
 
@@ -25,18 +25,18 @@
 
 <body>
 
-    <div id="techinLogoBigWrapper" style="opacity: 0.0;">
+    <div id="techinLogoBigWrapper" class="hidden">
         <img id="techinLogoBig" src="./assets/images/Techin.png" alt="Techin Logo">
     </div>
 
-    <div id="header" style="opacity: 0.0;">
+    <div id="header" class="hidden">
         <div id="headerBox">
-            <img id="techinLogo" src="./assets/images/Techin.png" alt="Techin Logo" style="opacity: 0.0;">
+            <img id="techinLogo" class="hidden" src="./assets/images/Techin.png" alt="Techin Logo">
             <form id="searchJobsForm">
-                <input id="jobTitleInput" class="form-control" type="text" placeholder="Job Title" spellcheck="false" style="opacity: 0.0;">
-                <input id="jobLocationInput" class="form-control" type="text" placeholder="City State or Zip" spellcheck="false" style="opacity: 0.0;">
-                <img id="locationIcon" src="./assets/images/locationIcon_Inactive.png" style="opacity: 0.0;">
-                <select id="jobSalaryInput" name="jobSalaryInput" style="opacity: 0.0;">
+                <input id="jobTitleInput" class="hidden form-control" type="text" placeholder="Job Title" spellcheck="false">
+                <input id="jobLocationInput" class="hidden form-control" type="text" placeholder="City State or Zip" spellcheck="false">
+                <img id="locationIcon" class="hidden" src="./assets/images/locationIcon_Inactive.png">
+                <select id="jobSalaryInput" class="hidden" name="jobSalaryInput">
                     <option value="33500">Salary</option>
                     <option value="33500">$33,500+</option>
                     <option value="50000">$50,000+</option>
@@ -44,7 +44,7 @@
                     <option value="150000">$150,000+</option>
                     <option value="200000">$200,000+</option>
                 </select>
-                <select id="jobRadiusInput" name="jobRadiusInput" style="opacity: 0.0;">
+                <select id="jobRadiusInput" class="hidden" name="jobRadiusInput">
                         <option value="50">Distance</option>
                         <option value="5">5 miles</option>
                         <option value="10">10 miles</option>
@@ -53,10 +53,10 @@
                         <option value="50">50 miles</option>
                 </select>
                 <button id="searchJobsClearBtn" type="button">
-                    <img id="clearIcon" src="./assets/images/clearIcon_Inactive.png" style="opacity: 0.0;">
+                    <img id="clearIcon" class="hidden" src="./assets/images/clearIcon_Inactive.png">
                 </button>
                 <button id="searchJobsSubmitBtn" type="submit">
-                    <img id="searchIcon" src="./assets/images/searchIcon_Inactive.png" style="opacity: 0.0;">
+                    <img id="searchIcon" class="hidden" src="./assets/images/searchIcon_Inactive.png">
                 </button>
             </form>
         </div>
@@ -66,22 +66,22 @@
         </div>
     </div>
 
-    <div id="switchWrapper" style="opacity: 0.0;">
+    <div id="switchWrapper" class="hidden">
         <label class="switch switch-carousel-table">
         <input id="resultsSwitch" class="switch-input" type="checkbox" value="Carousel">
         <span class="switch-label" data-on="Show Slides" data-off="Show Table"></span> <span class="switch-handle"></span> </label>
     </div>
 
-    <div id="loading" style="opacity: 0.0;">
+    <div id="loading" class="hidden">
         <img id="loadingIcon" src="./assets/images/loading.gif">
     </div>
 
-    <div id="jobResultsTBLWrapper" style="display: none;">
+    <div id="jobResultsTBLWrapper" class="displayNone">
         <div id="jobResults">Job Results</div>
         <table id="jobResultsTBL" class="cell-border hover"></table>
     </div>
 
-    <div id="jobsCarouselContainer" class="container-fluid" style="display: none;">
+    <div id="jobsCarouselContainer" class="container-fluid displayNone">
         <div id="jobResultsCarousel">Job Results</div>
         <div class="row">
             <div class="col-12">
@@ -116,9 +116,10 @@
     <script>
         $(document).ready(() => {
 
-            let launcher = new App();
+            const launcher = new App();
 
             launcher.startApp();
+
         });
     </script>
 

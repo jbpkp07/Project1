@@ -293,7 +293,7 @@ class ViewController {
 
         addEventListener("updateResults", () => {
 
-            let promise = Utility.createPromise(() => this._isStartCompleted === true);
+            const promise = Utility.createPromise(() => this._isStartCompleted === true);
 
             promise.then(() => {
 
