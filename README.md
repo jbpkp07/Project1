@@ -1,4 +1,4 @@
-# Project1  ("TechIn")
+# TechIn
 
 https://jbpkp07.github.io/Project1
 
