@@ -1,6 +1,6 @@
 # TechIn
 
-https://jbpkp07.github.io/Project1
+https://jbpkp07.github.io/TechIn
 
 TechIn is a job search website with a focus on technology and web developemt jobs. It has a dark theme to target the coder market!
 
